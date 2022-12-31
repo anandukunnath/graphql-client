@@ -1,0 +1,12 @@
+.add-form {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+.form-items {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.rating {
+    margin-top: 15px;
+}
