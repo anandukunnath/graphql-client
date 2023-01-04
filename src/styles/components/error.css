@@ -1,0 +1,18 @@
+.container {
+    margin: 25px;
+    width: 80%;
+    height: 90%;
+    position: relative;
+  }
+  
+  .child {
+    width: 250px;
+    height: 100%;
+    position: absolute;
+    top: 220px;
+    left: 53%;
+    margin: -25px 0 0 -25px; /* Apply negative top and left margins to truly center the element */
+  }
+  .img-c{
+    margin-left: 78px;
+  }

@@ -5,6 +5,7 @@ import AddIcon from "@mui/icons-material/Add";
 import AddDrawer from "../components/AddDrawer";
 import MovieList from "../components/MovieList";
 import UpdateDrawer from "../components/UpdateDrawer";
+import ErrorComponent from "../components/ErrorComponent";
 
 import "../styles/containers/homepage.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,7 +36,7 @@ function Homepage(props) {
       <Header />
       {entities.data?.getMovies.length > 0 ? (
         <MovieList data={entities.data.getMovies} sendBack={recieveBack} />
-      ) : null}
+      ) : <ErrorComponent/>}
 
       <div className="add-button" onClick={() => setOpen(true)}>
         <Fab color="primary" aria-label="add">

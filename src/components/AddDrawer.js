@@ -84,6 +84,7 @@ export default function AddDrawer(props) {
             />
             <TextField
               id="outlined-basic"
+              type='number'
               onChange={handleChange}
               name="year"
               value={input.year}

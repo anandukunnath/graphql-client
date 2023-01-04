@@ -35,7 +35,7 @@ export default function MovieCard(props) {
           component="img"
           alt="green image"
           height="100"
-          image={props.data.image}
+          image={props.data.image.length > 15 ? props.data.image:cardImage } 
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
