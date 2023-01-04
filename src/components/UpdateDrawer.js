@@ -14,6 +14,7 @@ const GET_MOVIE = gql`
       rating
       title
       year
+      image
     }
   }
 `;
@@ -23,17 +24,20 @@ const UPDATE_MOVIE = gql`
     $title: String!
     $rating: Float!
     $year: String!
+    $image: String!
   ) {
     updateMovie(
       id: $updateMovieId
       title: $title
       rating: $rating
       year: $year
+      image: $image
     ) {
       _id
       rating
       title
       year
+      image
     }
   }
 `;
@@ -43,6 +47,7 @@ export default function UpdateDrawer(props) {
   const [input, setInput] = useState({
     title: "",
     year: "",
+    image:""
   });
 
   const handleChange = (e) => {
@@ -58,6 +63,7 @@ export default function UpdateDrawer(props) {
       setInput({
         title: data.getMovie.title,
         year: data.getMovie.year,
+        image:data.getMovie.image
       });
       setValue(data.getMovie.rating);
     },
@@ -69,6 +75,7 @@ export default function UpdateDrawer(props) {
       title: input.title,
       rating: value,
       year: input.year,
+      image: input.image
     },
     onCompleted: (data) => {
       props.close();

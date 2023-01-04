@@ -8,18 +8,20 @@ import { gql, useMutation } from "@apollo/client";
 import "../styles/components/drawer.css";
 
 const CREATE_MOVIE = gql`
-  mutation CreateMovie($title: String!, $rating: Float!, $year: String!) {
-    createMovie(title: $title, rating: $rating, year: $year) {
+  mutation CreateMovie($title: String!, $rating: Float!, $year: String!, $image:String!) {
+    createMovie(title: $title, rating: $rating, year: $year, image:$image) {
       _id
       rating
       title
       year
+      image
     }
   }
 `;
 
 export default function AddDrawer(props) {
   const [value, setValue] = useState(0);
+  const [b64, setb64] = useState('');
   const [input, setInput] = useState({
     title: "",
     year: "",
@@ -29,6 +31,7 @@ export default function AddDrawer(props) {
       title: input.title,
       rating: value,
       year: input.year,
+      image: b64
     },
     onCompleted: (data) => {
       props.close();
@@ -36,9 +39,19 @@ export default function AddDrawer(props) {
         title: "",
         year: "",
       });
+      setb64("")
       setValue(0);
     },
   });
+  const  onFileChange = (event) => {
+      let baseURL = "";
+      let reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onload = () => {
+        baseURL = reader.result;
+        setb64(baseURL);
+      };
+  };
 
   const handleChange = (e) => {
     setInput({
@@ -46,6 +59,7 @@ export default function AddDrawer(props) {
       [e.target.name]: e.target.value,
     });
   };
+
 
   return (
     <>
@@ -76,6 +90,10 @@ export default function AddDrawer(props) {
                 setValue(newValue);
               }}
             />
+            <Button variant="contained" component="label">
+                Upload thumbnail
+                <input hidden accept="image/*" type="file" onChange={onFileChange} />
+            </Button>
             <Button variant="contained" onClick={() => createNew()}>
               {" "}
               Add to list

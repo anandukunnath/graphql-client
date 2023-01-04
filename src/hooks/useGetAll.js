@@ -7,6 +7,7 @@ query GetMovies {
       rating
       title
       year
+      image
     }
   }
 `;

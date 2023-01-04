@@ -9,9 +9,9 @@ export default function MovieList(props) {
   return (
     <div className='movie-list'>
         {
-            props.data.map(item => {
+            props.data.map((item,index) => {
                 return(
-                    <MovieCard data={item} edit={handleEdit} />
+                    <MovieCard key={index} data={item} edit={handleEdit} />
                 )
             })
         }
