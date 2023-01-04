@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
@@ -7,30 +7,35 @@ import MovieList from "../components/MovieList";
 import UpdateDrawer from "../components/UpdateDrawer";
 
 import "../styles/containers/homepage.css";
-import { useGetAll } from "../hooks/useGetAll";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchMovies } from "../redux/reducer";
 
-export default function Homepage() {
+function Homepage(props) {
+  const dispatch = useDispatch();
+  const { entities, loading } = useSelector((state) => state);
   const [open, setOpen] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [current, setCurrent] = useState(null);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
   const handleEditClose = () => setCurrent(null);
-  const { error, data, loading } = useGetAll();
 
   const recieveBack = (data) => {
     setCurrent(data);
     setOpenEdit(true);
   };
-  
+
+  useEffect(() => {
+    dispatch(fetchMovies());
+  }, []);
 
   return (
     <>
       <Header />
-      {loading ? (
-        <p>loading</p>
-      ) : (
-        <MovieList data={data.getMovies} sendBack={recieveBack} />
-      )}
+      {entities.data?.getMovies.length > 0 ? (
+        <MovieList data={entities.data.getMovies} sendBack={recieveBack} />
+      ) : null}
 
       <div className="add-button" onClick={() => setOpen(true)}>
         <Fab color="primary" aria-label="add">
@@ -44,3 +49,4 @@ export default function Homepage() {
     </>
   );
 }
+export default Homepage;

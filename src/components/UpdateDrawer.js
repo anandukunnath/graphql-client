@@ -4,6 +4,8 @@ import TextField from "@mui/material/TextField";
 import Rating from "@mui/material/Rating";
 import Button from "@mui/material/Button";
 import { gql, useQuery, useMutation } from "@apollo/client";
+import { useDispatch } from "react-redux";
+import { fetchMovies } from "../redux/reducer";
 
 import "../styles/components/drawer.css";
 
@@ -43,6 +45,7 @@ const UPDATE_MOVIE = gql`
 `;
 
 export default function UpdateDrawer(props) {
+  const dispatch = useDispatch();
   const [value, setValue] = useState(0);
   const [input, setInput] = useState({
     title: "",
@@ -79,6 +82,7 @@ export default function UpdateDrawer(props) {
     },
     onCompleted: (data) => {
       props.close();
+      dispatch(fetchMovies());
     },
   });
 

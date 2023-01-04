@@ -7,6 +7,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Rating from "@mui/material/Rating";
 import { gql, useMutation } from "@apollo/client";
+import { useDispatch } from "react-redux";
+import { fetchMovies } from "../redux/reducer";
 
 import cardImage from "../images/card-image.png";
 import "../styles/components/moviecard.css";
@@ -20,10 +22,12 @@ const DELETE_MOVIE = gql`
 `;
 
 export default function MovieCard(props) {
-  const [deleteOneMovie, { error, loading, data }] = useMutation(
-    DELETE_MOVIE,
-    {}
-  );
+  const dispatch = useDispatch();
+  const [deleteOneMovie, { error, loading, data }] = useMutation(DELETE_MOVIE, {
+    onError: (data) => {
+      dispatch(fetchMovies());
+    },
+  });
   return (
     <div className="card-body">
       <Card sx={{ width: 245 }}>
